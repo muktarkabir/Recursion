@@ -32,8 +32,6 @@ let d = merge([8], [0, 234]);
 
 function twoWayMergeSort(unsortedArray) {
   let bigArray = [];
-  let secondPass = [];
-  let thirdPass = [];
   let elem1 = 0;
   let elem2 = 1;
   //rounding up accounts for uneven number of elements
@@ -50,27 +48,17 @@ function twoWayMergeSort(unsortedArray) {
     elem1 += 2;
     elem2 += 2;
   }
-  //reset elem variables for reuse
-  elem1 = 0;
-  elem2 = 1;
-  
-  let noOfPairsForSecondPass = Math.round(bigArray.length / 2);
-  for (let i = 0; i < noOfPairsForSecondPass; i++) secondPass.push([]);
- for (let index = 0; index < secondPass.length; index++) {  
-    if (bigArray[elem2]) {
-      let sortedPair = merge(bigArray[elem1], bigArray[elem2]);
-      secondPass[index] = sortedPair;
-    } else {
-      secondPass[index] = bigArray[elem1];
-    }
-    elem1 += 2;
-    elem2 += 2;
+  //I realized that its more efficient to merge everything together at this point.
+  let numberOfMerges = bigArray.length - 1;
+  //Figured out the number of merges required is the number of arrays minus one
+  for (let i = 0; i < numberOfMerges; i++) {
+    let a = bigArray.shift();
+    let b = bigArray.shift();
+    let c = merge(a, b);
+    bigArray.unshift(c);
+    //repeating this until there is only one array left which will then be sorted.
   }
-console.log(secondPass);
-  
-
-
-  return bigArray;
+  return bigArray[0];
 }
 
-twoWayMergeSort([9, 3, 5, 7, 4, 2, 456, 0, 4]);
+console.log(twoWayMergeSort([9,0, 3,5,4, 2, 54, 6, 3, 2, 555]));

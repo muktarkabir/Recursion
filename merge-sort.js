@@ -1,17 +1,11 @@
 function merge(arr1, arr2) {
-  if (!Array.isArray(arr1) || !Array.isArray(arr2)) {
-    console.log(typeof arr1, typeof arr2);
-    console.log({ arr1, arr2 });
-
-    throw new Error("Pass in arrays");
-  }
+  if (!Array.isArray(arr1) || !Array.isArray(arr2)) throw new Error("Pass in arrays of numbers");
   let mergedArray = [];
   let i = 0;
   let j = 0;
   let k = 0;
   let m = arr1.length - 1;
   let n = arr2.length - 1;
-  console.log(arr1, arr2);
 
   while (i <= m && j <= n) {
     if (arr1[i] < arr2[j]) {
@@ -28,12 +22,12 @@ function merge(arr1, arr2) {
   for (; j <= n; j++) mergedArray[k++] = arr2[j];
   return mergedArray;
 }
-let a = [2, 3, 6, 9, 13, 98];
-let b = [0, 4, 4, 5, 7, 11, 13, 97];
-// let c = merge(a, b);
-// console.log(c);
+const a = [2, 3, 6, 9, 13, 98];
+const b = [0, 4, 4, 5, 7,];
+merge(a, b); // [0,2, 3, 4,4,5, 6, 7, 9, 13, 98]
 
 function twoWayMergeSort(unsortedArray) {
+  if (!Array.isArray(unsortedArray)) throw new Error("Pass in an array of numbers");
   let bigArray = [];
   let elem1 = 0;
   let elem2 = 1;
@@ -64,7 +58,7 @@ function twoWayMergeSort(unsortedArray) {
   return bigArray[0];
 }
 
-// console.log(twoWayMergeSort([9, 0, 3, 5, 4, 2, 54, 6, 3, 2, 555]));
+twoWayMergeSort([9, 0, 3, 5, 4, 2, 54, 6, 3, 2, 555]); // [ 0, 2, 2, 3, 3,4, 5, 6, 9, 54,555]
 
 const mergeSort = (
   array,
@@ -72,22 +66,20 @@ const mergeSort = (
   high = array.length - 1,
   mid = Math.floor((low + high) / 2)
 ) => {
-  console.log({ array, low, high, mid });
-if (array.length == 2) {
-    console.log("Here here", array);
-    let merged = merge([array.at(-2)], [array.at(-1)]);
-    console.log("Here is the sorted", merged);
+  if (!Array.isArray(array)) throw new Error("Pass in an array of numbers");
+
+  if (array.length == 2) {
+    const merged = merge([array.at(-2)], [array.at(-1)]);
     return merged;
   } else if (array.length == 1) {
     return array;
   }
-  if (low < high) {
+  // if (low < high) {
     let left = mergeSort(array.slice(low, mid + 1));
     let right = mergeSort(array.slice(mid + 1, high + 1));
-    let mergedAndSorted = merge(left, right);
-    console.log("Final Answer:", mergedAndSorted);
+    const mergedAndSorted = merge(left, right);
     return mergedAndSorted;
-  }
+  // }
 };
 
-mergeSort([31, 5, 7, 12, 23,3,1,11,43,6,8,9,5]);
+mergeSort([31, 5, 7, 12, 23, 3, 1, 11, 43, 6, 8, 9, 5]); //[1,3,5,5,6,7,8,9,11,12,23,31,43]

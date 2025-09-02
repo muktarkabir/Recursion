@@ -1,5 +1,3 @@
-const mergeSort = (array) => {};
-
 function merge(arr1, arr2) {
   let mergedArray = [];
   let i = 0;
@@ -27,8 +25,6 @@ let a = [2, 3, 6, 9, 13, 98];
 let b = [0, 4, 4, 5, 7, 11, 13, 97];
 let c = merge(a, b);
 // console.log(c);
-let d = merge([8], [0, 234]);
-// console.log(d);
 
 function twoWayMergeSort(unsortedArray) {
   let bigArray = [];
@@ -61,4 +57,16 @@ function twoWayMergeSort(unsortedArray) {
   return bigArray[0];
 }
 
-console.log(twoWayMergeSort([9,0, 3,5,4, 2, 54, 6, 3, 2, 555]));
+// console.log(twoWayMergeSort([9, 0, 3, 5, 4, 2, 54, 6, 3, 2, 555]));
+
+const mergeSort = ({ array, low = 0, high = array.length - 1 }) => {
+  console.log({ array, low, high });
+  if (low < high) {
+    let mid = Math.floor((low + high) / 2);
+    mergeSort({ array: array.slice(low, mid + 1) });
+    mergeSort({ array: array.slice(mid + 1, high + 1) });
+    merge(array.slice(low, mid + 1), array.slice(mid + 1, high + 1));
+  }
+};
+
+mergeSort({ array: [12, 3, 4, 5, 6, 7, 5] });
